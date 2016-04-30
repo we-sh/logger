@@ -1,0 +1,30 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   logger_init.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anouvel <adrien.nouvel@outlook.com>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/04/30 18:42:37 by anouvel           #+#    #+#             */
+/*   Updated: 2016/04/30 18:42:38 by anouvel          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "logger.h"
+
+int	logger_init(int level, char *log_file)
+{
+	int	ret;
+
+	if ((ret = logger_init_open_file(log_file)) < 0)
+		return (ret);
+	g_log_lvl = D_OFF;
+	if (level >= D_FATAL && level <= D_TRACE)
+	{
+		g_log_lvl = level;
+		dprintf(g_log_fd, "\n\033[32m>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> \033[0m");
+		dprintf(g_log_fd, "\033[32mNEW INSTANCE OF THE APPLICATION\033[0m");
+		dprintf(g_log_fd, "\033[32m <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\033[0m\n\n");
+	}
+	return (0);
+}
