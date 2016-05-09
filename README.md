@@ -2,15 +2,11 @@
 
 The logger library provide a tool to display some logging messages into a file.
 
-### Table of contents
-
-[TOC]
-
 ### Use case
 
 The following snippet explain how to use the logger library :
 
-```
+```C
 #include "logger.h"
 
 int	main(void)
@@ -33,14 +29,14 @@ int	main(void)
 - The purpose of ```int logger_init(int level, char *log_file);``` is to setup the logger with some parameters.  It returns 0 on success, and a negative value otherwise.
 
 
-```
+```C
 if (logger_init(D_TRACE, "/tmp/out.log") != 0)
 	printf("failed to open the logger\n");
 ```
 
 - To exit properly the logger, use the close function ```int logger_close(void);``` :
 
-```
+```C
 logger_close();
 ```
 
@@ -48,7 +44,7 @@ logger_close();
 
 The log level must be one of the following macros, if it is not, the default ```D_OFF``` level will be used :
 
-```
+```C
 # define D_OFF			0
 # define D_FATAL		1
 # define D_ERROR		2
@@ -78,7 +74,7 @@ The logic of the log level in the initializing function is the following:
 
 Use the following functions to display a log message :
 
-```
+```C
 void	log_fatal(const char * restrict format, ...);
 void	log_error(const char * restrict format, ...);
 void	log_warn(const char * restrict format, ...);
@@ -93,7 +89,7 @@ The arguments are the same as ```man 3 printf``` function.
 
 Each functions will provide a different output, here is a sample of the execution of the snippet at the top of the document :
 
-```
+```C
 >>>>>>>>>>>>>>>>> NEW INSTANCE OF THE APPLICATION <<<<<<<<<<<<<<<<<
 
 [ 2016/05/01 13:49:20 ] [ FATAL ] (l. 19) main.c -> fatal
