@@ -20,6 +20,8 @@
 # include <fcntl.h>
 # include <string.h>
 
+# define OUT_SIZE	2048
+
 /*
 ** Macro to get the basename of the __FILE__ macro.
 */
@@ -31,8 +33,15 @@
 ** Global variables, the file descriptor to write on, and the log level.
 */
 
-int		g_log_fd;
-int		g_log_lvl;
+int			g_log_fd;
+int			g_log_lvl;
+
+/*
+** Global variables to store the output message.
+*/
+
+static char	g_out_info[OUT_SIZE];
+static char	g_out_mesg[OUT_SIZE];
 
 /*
 ** Tools functions.
