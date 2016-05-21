@@ -13,12 +13,12 @@ int	main(void)
 {
 	if (logger_init(D_TRACE, "/tmp/out.log") != 0)
 		printf("failed to open the logger\n");
-	log_fatal("%s\n", "fatal");
-	log_error("%s\n", "error");
-	log_warn("%s\n", "warning");
-	log_info("%s\n", "info");
-	log_debug("%s\n", "debug");
-	log_trace("%s\n", "trace");
+	log_fatal("%s", "fatal");
+	log_error("%s", "error");
+	log_warn("%s", "warning");
+	log_info("%s", "info");
+	log_debug("%s", "debug");
+	log_trace("%s", "trace");
 	logger_close();
 	return (0);
 }
@@ -101,6 +101,8 @@ Each functions will provide a different output, here is a sample of the executio
 
 >>>>>>>>>>>>>>>>> END OF THE APPLICATION INSTANCE <<<<<<<<<<<<<<<<<
 ```
+
+Notice that the logger appends a `\n` at the end of the message, so it is not necessary to add it.
 
 #### Purpose of logging level
 
