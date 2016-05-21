@@ -27,8 +27,8 @@ void	logger_info(int fd, char *file, int line, const char *fmt, ...)
 	va_start(lst, fmt);
 	vsprintf(g_out_mesg, fmt, lst);
 	va_end(lst);
-	
+
 	dprintf(fd, "%s%s\n", g_out_info, g_out_mesg);
-	
+
 	free(time);
 }
