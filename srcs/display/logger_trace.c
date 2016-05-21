@@ -19,11 +19,16 @@ void	logger_trace(int fd, char *file, int line, const char *fmt, ...)
 
 	if (g_log_lvl < D_TRACE)
 		return ;
-	va_start(lst, fmt);
+
 	time = logger_get_time();
-	dprintf(fd, "\033[0m[ %s ] [ %-5s ]\033[0m (l.%3d) %s -> ", \
+	sprintf(g_out_info, "\033[0m[ %s ] [ %-5s ]\033[0m (l.%3d) %s -> ", \
 			time, "TRACE", line, file);
-	vdprintf(fd, fmt, lst);
+
+	va_start(lst, fmt);
+	vsprintf(g_out_mesg, fmt, lst);
 	va_end(lst);
+
+	dprintf(fd, "%s%s\n", g_out_info, g_out_mesg);
+
 	free(time);
 }
