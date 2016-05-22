@@ -7,7 +7,6 @@
 
 /*
 ** Log levels.
-** See logger_init() for more informations.
 */
 
 # define D_OFF			0
@@ -46,9 +45,6 @@
 ** log output (the log_file paramater).
 ** - The level parameter must be one of the define D_*. If it is not one of
 ** them, the define D_OFF will be used.
-** - Levels are descendant, for example, if the level is defined as 'INFO', all
-** the messages from 'FATAL' to 'INFO' will be displayed, but all the messages
-** from 'DEBUG' to 'TRACE' will be skiped.
 */
 
 int		logger_init(int level, char *log_file);
