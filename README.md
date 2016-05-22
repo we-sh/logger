@@ -1,10 +1,10 @@
 # Logger
 
-The logger library provide a tool to display some logging messages into a file.
+The logger library provides a tool to write some logging messages into a file.
 
 ### Use case
 
-The following snippet explain how to use the logger library :
+The following snippet explains how to use the logger library (see `test/main.c` to try this example) :
 
 ```C
 #include "logger.h"
@@ -13,12 +13,12 @@ int	main(void)
 {
 	if (logger_init(D_TRACE, "/tmp/out.log") != 0)
 		printf("failed to open the logger\n");
-	log_fatal("%s", "fatal");
-	log_error("%s", "error");
-	log_warn("%s", "warning");
-	log_info("%s", "info");
-	log_debug("%s", "debug");
-	log_trace("%s", "trace");
+	log_fatal("%s", "fatal message");
+	log_error("%s", "error message");
+	log_warn("%s", "warning message");
+	log_info("%s", "info message");
+	log_debug("%s", "debug message");
+	log_trace("%s", "trace message");
 	logger_close();
 	return (0);
 }
@@ -92,12 +92,12 @@ Each functions will provide a different output, here is a sample of the executio
 ```C
 >>>>>>>>>>>>>>>>> NEW INSTANCE OF THE APPLICATION <<<<<<<<<<<<<<<<<
 
-[ 2016/05/01 13:49:20 ] [ FATAL ] (l. 19) main.c -> fatal
-[ 2016/05/01 13:49:20 ] [ ERROR ] (l. 20) main.c -> error
-[ 2016/05/01 13:49:20 ] [ WARN  ] (l. 21) main.c -> warning
-[ 2016/05/01 13:49:20 ] [ INFO  ] (l. 22) main.c -> info
-[ 2016/05/01 13:49:20 ] [ DEBUG ] (l. 23) main.c -> debug
-[ 2016/05/01 13:49:20 ] [ TRACE ] (l. 24) main.c -> trace
+[ 2016/05/01 13:49:20 ] [ FATAL ] (l. 19) main.c -> fatal message
+[ 2016/05/01 13:49:20 ] [ ERROR ] (l. 20) main.c -> error message
+[ 2016/05/01 13:49:20 ] [ WARN  ] (l. 21) main.c -> warning message
+[ 2016/05/01 13:49:20 ] [ INFO  ] (l. 22) main.c -> info message
+[ 2016/05/01 13:49:20 ] [ DEBUG ] (l. 23) main.c -> debug message
+[ 2016/05/01 13:49:20 ] [ TRACE ] (l. 24) main.c -> trace message
 
 >>>>>>>>>>>>>>>>> END OF THE APPLICATION INSTANCE <<<<<<<<<<<<<<<<<
 ```

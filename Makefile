@@ -49,6 +49,7 @@ DIRSRC		=	./srcs/
 DIROBJ		=	./.objs/
 DIRINC		=	./incs/
 DIRLIB		=	./libs/
+DIRTST		=	./test/
 
 # EXTRA COLOR
 C_DFL		=	\033[0m
@@ -90,6 +91,10 @@ libs		:
 
 fcleanlibs	:
 
+test		:	all
+	@printf "$(C_GRE)[ $(NAME) ] [ %-6s ]$(C_DFL) compiling test\n" "$(CC)"
+	@$(CC) $(CFLAGS) -I $(DIRINC) $(NAME) $(DIRTST)main.c
+
 # ---------------------------------------------------------------------------- #
 
 clean		:
@@ -99,6 +104,10 @@ clean		:
 fclean		:	fcleanlibs clean
 	@printf "$(C_GRE)[ $(NAME) ] [ %-6s ]$(C_DFL) remove binaries\n" "$(RM)"
 	@$(RM) -f $(NAME)
+	@printf "$(C_GRE)[ $(NAME) ] [ %-6s ]$(C_DFL) remove test binary\n" "$(RM)"
+	@$(RM) -f a.out
+	@printf "$(C_GRE)[ $(NAME) ] [ %-6s ]$(C_DFL) remove log files\n" "$(RM)"
+	@$(RM) -f *.log
 
 re			:	fclean all
 
@@ -130,7 +139,7 @@ depend		:
 	;)
 	@printf "\n#end\n" >> Makefile
 
-.PHONY	:	 libs
+.PHONY	:	 libs test
 
 # ---------------------------------------------------------------------------- #
 # AUTO-GENERATED SECTION - do not modify
