@@ -27,12 +27,12 @@ SRCS		=	\
 # ---------------------------------------------------------------------------- #
 
 CFLAGS		=	\
-				-Wall -Wextra -Werror			\
+				-Wall -Wextra -Werror					\
 
 # >>> REQUIRED FOR LIBRARIES >>> THINK ABOUT CHANGING THE *LIBS rules
 
 CPPFLAGS	=	\
-				-I $(DIRINC)					\
+				-I $(DIRINC)							\
 
 LDFLAGS		=	\
 
