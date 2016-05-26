@@ -25,13 +25,6 @@ int			g_log_fd;
 int			g_log_lvl;
 
 /*
-** Global variables to store the output message.
-*/
-
-static char	g_out_info[OUT_SIZE];
-static char	g_out_mesg[OUT_SIZE];
-
-/*
 ** Tools functions.
 */
 
