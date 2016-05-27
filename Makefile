@@ -93,7 +93,8 @@ fcleanlibs	:
 
 test		:	all
 	@printf "$(C_GRE)[ $(NAME) ] [ %-6s ]$(C_DFL) compiling test\n" "$(CC)"
-	@$(CC) $(CFLAGS) -I $(DIRINC) $(NAME) $(DIRTST)main.c
+	@$(CC) $(CFLAGS) -c $(DIRTST)main.c -o main.o -I $(DIRINC)
+	@$(CC) main.o $(NAME) -o a.out
 
 # ---------------------------------------------------------------------------- #
 
@@ -105,7 +106,7 @@ fclean		:	fcleanlibs clean
 	@printf "$(C_GRE)[ $(NAME) ] [ %-6s ]$(C_DFL) remove binaries\n" "$(RM)"
 	@$(RM) -f $(NAME)
 	@printf "$(C_GRE)[ $(NAME) ] [ %-6s ]$(C_DFL) remove test binary\n" "$(RM)"
-	@$(RM) -f a.out
+	@$(RM) -f a.out main.o
 	@printf "$(C_GRE)[ $(NAME) ] [ %-6s ]$(C_DFL) remove log files\n" "$(RM)"
 	@$(RM) -f *.log
 
