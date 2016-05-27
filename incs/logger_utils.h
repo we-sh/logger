@@ -2,13 +2,13 @@
 # define LOGGER_UTILS_H
 
 # include <stdarg.h>
+# define _GNU_SOURCE
 # include <stdio.h>
 # include <stdlib.h>
 # include <time.h>
 # include <fcntl.h>
 # include <string.h>
-
-# define OUT_SIZE	2048
+# include <unistd.h>
 
 /*
 ** Macro to get the basename of the __FILE__ macro.

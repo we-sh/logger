@@ -3,8 +3,6 @@
 
 # include "logger_utils.h"
 
-# include <unistd.h>
-
 /*
 ** Log levels.
 */
