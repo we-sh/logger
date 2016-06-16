@@ -92,16 +92,17 @@ The arguments are the same as ```man 3 printf``` function.
 Each functions will provide a different output, here is a sample of the execution of the snippet at the top of the document :
 
 ```C
->>>>>>>>>>>>>>>>> NEW INSTANCE OF THE APPLICATION <<<<<<<<<<<<<<<<<
+>>>>>>>>>>>>>>>>>> NEW INSTANCE OF THE APPLICATION <<<<<<<<<<<<<<<<<<
 
-[ 2016/05/01 13:49:20 ] [ FATAL ] (l. 19) main.c -> fatal message
-[ 2016/05/01 13:49:20 ] [ ERROR ] (l. 20) main.c -> error message
-[ 2016/05/01 13:49:20 ] [ WARN  ] (l. 21) main.c -> warning message
-[ 2016/05/01 13:49:20 ] [ INFO  ] (l. 22) main.c -> info message
-[ 2016/05/01 13:49:20 ] [ DEBUG ] (l. 23) main.c -> debug message
-[ 2016/05/01 13:49:20 ] [ TRACE ] (l. 24) main.c -> trace message
+[ 2016/05/01 13:49:20 ] [ FATAL   ] (l. 19) main.c -> fatal message
+[ 2016/05/01 13:49:20 ] [ ERROR   ] (l. 20) main.c -> error message
+[ 2016/05/01 13:49:20 ] [ WARN    ] (l. 21) main.c -> warning message
+[ 2016/05/01 13:49:20 ] [ SUCCESS ] (l. 22) main.c -> success message
+[ 2016/05/01 13:49:20 ] [ INFO    ] (l. 23) main.c -> info message
+[ 2016/05/01 13:49:20 ] [ DEBUG   ] (l. 24) main.c -> debug message
+[ 2016/05/01 13:49:20 ] [ TRACE   ] (l. 25) main.c -> trace message
 
->>>>>>>>>>>>>>>>> END OF THE APPLICATION INSTANCE <<<<<<<<<<<<<<<<<
+>>>>>>>>>>>>>>>>>> END OF THE APPLICATION INSTANCE <<<<<<<<<<<<<<<<<<
 ```
 
 Notice that the logger appends a `\n` at the end of the message, so it is not necessary to add it.
