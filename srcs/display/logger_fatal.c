@@ -11,14 +11,14 @@ void	logger_fatal(int fd, char *file, int line, const char *fmt, ...)
 		return ;
 
 	time = logger_get_time();
-	asprintf(&out_info, "\033[31m[ %s ] [ %-7s ] (l.%3d) %s -> \033[0m", \
+	asprintf(&out_info, "[ %s ] [ %-7s ] (l.%3d) %s -> ", \
 			time, "FATAL", line, file);
 
 	va_start(lst, fmt);
 	vasprintf(&out_mesg, fmt, lst);
 	va_end(lst);
 
-	dprintf(fd, "%s%s\n", out_info, out_mesg);
+	dprintf(fd, "\033[31m%s%s\033[0m\n", out_info, out_mesg);
 
 	free(out_info);
 	free(out_mesg);
