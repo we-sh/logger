@@ -11,7 +11,7 @@ void	logger_info(int fd, char *file, int line, const char *fmt, ...)
 		return ;
 
 	time = logger_get_time();
-	asprintf(&out_info, "\033[36m[ %s ] [ %-5s ]\033[0m (l.%3d) %s -> ", \
+	asprintf(&out_info, "\033[36m[ %s ] [ %-7s ]\033[0m (l.%3d) %s -> ", \
 			time, "INFO", line, file);
 
 	va_start(lst, fmt);

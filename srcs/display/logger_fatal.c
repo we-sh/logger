@@ -11,7 +11,7 @@ void	logger_fatal(int fd, char *file, int line, const char *fmt, ...)
 		return ;
 
 	time = logger_get_time();
-	asprintf(&out_info, "\033[31m[ %s ] [ %-5s ] (l.%3d) %s -> \033[0m", \
+	asprintf(&out_info, "\033[31m[ %s ] [ %-7s ] (l.%3d) %s -> \033[0m", \
 			time, "FATAL", line, file);
 
 	va_start(lst, fmt);
