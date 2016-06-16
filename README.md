@@ -49,9 +49,10 @@ The log level must be one of the following macros, if it is not, the default ```
 # define D_FATAL		1
 # define D_ERROR		2
 # define D_WARN			3
-# define D_INFO			4
-# define D_DEBUG		5
-# define D_TRACE		6
+# define D_SUCCESS		4
+# define D_INFO			5
+# define D_DEBUG		6
+# define D_TRACE		7
 ```
 
 The logic of the log level in the initializing function is the following:
@@ -78,6 +79,7 @@ Use the following functions to display a log message :
 void	log_fatal(const char * restrict format, ...);
 void	log_error(const char * restrict format, ...);
 void	log_warn(const char * restrict format, ...);
+void	log_success(const char * restrict format, ...);
 void	log_info(const char * restrict format, ...);
 void	log_debug(const char * restrict format, ...);
 void	log_trace(const char * restrict format, ...);
@@ -111,6 +113,7 @@ There is no rules for the using of the levels, but we can considered that :
 - ```FATAL``` will produce the end of the execution of the program (ex : wrong configuration)
 - ```ERROR``` is a code failure (ex : cannot open a non-critical configuration file)
 - ```WARN``` is not an error, but change the behavior of the program (ex : stub part of code)
+- ```SUCCESS``` inform that an operation has exited with success
 - ```INFO``` is like ```warn```, but it is not dangerous as a warning (ex : configuration file loaded)
 - ```DEBUG``` is for developers, like ```INFO``` but not for the user (ex : display the size of a window)
 - ```TRACE``` is for 'low level' developers (ex : display the i of a while loop)  

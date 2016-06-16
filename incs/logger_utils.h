@@ -33,6 +33,7 @@ int		logger_init_open_file(char *log_file);
 void	logger_fatal(int fd, char *file, int line, const char *fmt, ...);
 void	logger_error(int fd, char *file, int line, const char *fmt, ...);
 void	logger_warn(int fd, char *file, int line, const char *fmt, ...);
+void	logger_success(int fd, char *file, int line, const char *fmt, ...);
 void	logger_info(int fd, char *file, int line, const char *fmt, ...);
 void	logger_debug(int fd, char *file, int line, const char *fmt, ...);
 void	logger_trace(int fd, char *file, int line, const char *fmt, ...);

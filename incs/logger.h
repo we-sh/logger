@@ -12,30 +12,34 @@
 # define D_FATAL		1
 # define D_ERROR		2
 # define D_WARN			3
-# define D_INFO			4
-# define D_DEBUG		5
-# define D_TRACE		6
+# define D_SUCCESS		4
+# define D_INFO			5
+# define D_DEBUG		6
+# define D_TRACE		7
 
 /*
 ** Functions to use for display log messages.
 */
 
-#define log_fatal(...)	\
+#define log_fatal(...)		\
 	logger_fatal(g_log_fd, __FILENAME__, __LINE__, __VA_ARGS__)
 
-#define log_error(...)	\
+#define log_error(...)		\
 	logger_error(g_log_fd, __FILENAME__, __LINE__, __VA_ARGS__)
 
-#define log_warn(...)	\
+#define log_warn(...)		\
 	logger_warn(g_log_fd, __FILENAME__, __LINE__, __VA_ARGS__)
 
-#define log_info(...)	\
+#define log_success(...)	\
+	logger_success(g_log_fd, __FILENAME__, __LINE__, __VA_ARGS__)
+
+#define log_info(...)		\
 	logger_info(g_log_fd, __FILENAME__, __LINE__, __VA_ARGS__)
 
-#define log_debug(...)	\
+#define log_debug(...)		\
 	logger_debug(g_log_fd, __FILENAME__, __LINE__, __VA_ARGS__)
 
-#define log_trace(...)	\
+#define log_trace(...)		\
 	logger_trace(g_log_fd, __FILENAME__, __LINE__, __VA_ARGS__)
 
 /*

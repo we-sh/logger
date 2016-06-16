@@ -16,6 +16,7 @@ SRCS		=	\
 				display/logger_fatal.c					\
 				display/logger_error.c					\
 				display/logger_warn.c					\
+				display/logger_success.c				\
 				display/logger_info.c					\
 				display/logger_debug.c					\
 				display/logger_trace.c					\
@@ -148,52 +149,68 @@ depend		:
 
 #start
 
-$(DIROBJ)logger_init.o: srcs/logger/logger_init.c incs/logger.h
+$(DIROBJ)logger_init.o: srcs/logger/logger_init.c incs/logger.h \
+  incs/logger_utils.h
 		@printf "$(C_GRE)[ liblogger.a ] [ %-6s ]$(C_DFL) " "clang"
 		@printf "compiling ./srcs/logger/logger_init.c\n"
 		@$(CC) -c ./srcs/logger/logger_init.c -o ./.objs/logger_init.o $(CPPFLAGS) $(CFLAGS) 
 
-$(DIROBJ)logger_close.o: srcs/logger/logger_close.c incs/logger.h
+$(DIROBJ)logger_close.o: srcs/logger/logger_close.c incs/logger.h \
+  incs/logger_utils.h
 		@printf "$(C_GRE)[ liblogger.a ] [ %-6s ]$(C_DFL) " "clang"
 		@printf "compiling ./srcs/logger/logger_close.c\n"
 		@$(CC) -c ./srcs/logger/logger_close.c -o ./.objs/logger_close.o $(CPPFLAGS) $(CFLAGS) 
 
-$(DIROBJ)logger_fatal.o: srcs/display/logger_fatal.c incs/logger.h
+$(DIROBJ)logger_fatal.o: srcs/display/logger_fatal.c incs/logger.h \
+  incs/logger_utils.h
 		@printf "$(C_GRE)[ liblogger.a ] [ %-6s ]$(C_DFL) " "clang"
 		@printf "compiling ./srcs/display/logger_fatal.c\n"
 		@$(CC) -c ./srcs/display/logger_fatal.c -o ./.objs/logger_fatal.o $(CPPFLAGS) $(CFLAGS) 
 
-$(DIROBJ)logger_error.o: srcs/display/logger_error.c incs/logger.h
+$(DIROBJ)logger_error.o: srcs/display/logger_error.c incs/logger.h \
+  incs/logger_utils.h
 		@printf "$(C_GRE)[ liblogger.a ] [ %-6s ]$(C_DFL) " "clang"
 		@printf "compiling ./srcs/display/logger_error.c\n"
 		@$(CC) -c ./srcs/display/logger_error.c -o ./.objs/logger_error.o $(CPPFLAGS) $(CFLAGS) 
 
-$(DIROBJ)logger_warn.o: srcs/display/logger_warn.c incs/logger.h
+$(DIROBJ)logger_warn.o: srcs/display/logger_warn.c incs/logger.h \
+  incs/logger_utils.h
 		@printf "$(C_GRE)[ liblogger.a ] [ %-6s ]$(C_DFL) " "clang"
 		@printf "compiling ./srcs/display/logger_warn.c\n"
 		@$(CC) -c ./srcs/display/logger_warn.c -o ./.objs/logger_warn.o $(CPPFLAGS) $(CFLAGS) 
 
-$(DIROBJ)logger_info.o: srcs/display/logger_info.c incs/logger.h
+$(DIROBJ)logger_success.o: srcs/display/logger_success.c incs/logger.h \
+  incs/logger_utils.h
+		@printf "$(C_GRE)[ liblogger.a ] [ %-6s ]$(C_DFL) " "clang"
+		@printf "compiling ./srcs/display/logger_success.c\n"
+		@$(CC) -c ./srcs/display/logger_success.c -o ./.objs/logger_success.o $(CPPFLAGS) $(CFLAGS) 
+
+$(DIROBJ)logger_info.o: srcs/display/logger_info.c incs/logger.h \
+  incs/logger_utils.h
 		@printf "$(C_GRE)[ liblogger.a ] [ %-6s ]$(C_DFL) " "clang"
 		@printf "compiling ./srcs/display/logger_info.c\n"
 		@$(CC) -c ./srcs/display/logger_info.c -o ./.objs/logger_info.o $(CPPFLAGS) $(CFLAGS) 
 
-$(DIROBJ)logger_debug.o: srcs/display/logger_debug.c incs/logger.h
+$(DIROBJ)logger_debug.o: srcs/display/logger_debug.c incs/logger.h \
+  incs/logger_utils.h
 		@printf "$(C_GRE)[ liblogger.a ] [ %-6s ]$(C_DFL) " "clang"
 		@printf "compiling ./srcs/display/logger_debug.c\n"
 		@$(CC) -c ./srcs/display/logger_debug.c -o ./.objs/logger_debug.o $(CPPFLAGS) $(CFLAGS) 
 
-$(DIROBJ)logger_trace.o: srcs/display/logger_trace.c incs/logger.h
+$(DIROBJ)logger_trace.o: srcs/display/logger_trace.c incs/logger.h \
+  incs/logger_utils.h
 		@printf "$(C_GRE)[ liblogger.a ] [ %-6s ]$(C_DFL) " "clang"
 		@printf "compiling ./srcs/display/logger_trace.c\n"
 		@$(CC) -c ./srcs/display/logger_trace.c -o ./.objs/logger_trace.o $(CPPFLAGS) $(CFLAGS) 
 
-$(DIROBJ)logger_get_time.o: srcs/utils/logger_get_time.c incs/logger.h
+$(DIROBJ)logger_get_time.o: srcs/utils/logger_get_time.c incs/logger.h \
+  incs/logger_utils.h
 		@printf "$(C_GRE)[ liblogger.a ] [ %-6s ]$(C_DFL) " "clang"
 		@printf "compiling ./srcs/utils/logger_get_time.c\n"
 		@$(CC) -c ./srcs/utils/logger_get_time.c -o ./.objs/logger_get_time.o $(CPPFLAGS) $(CFLAGS) 
 
-$(DIROBJ)logger_init_open_file.o: srcs/utils/logger_init_open_file.c incs/logger.h
+$(DIROBJ)logger_init_open_file.o: srcs/utils/logger_init_open_file.c incs/logger.h \
+  incs/logger_utils.h
 		@printf "$(C_GRE)[ liblogger.a ] [ %-6s ]$(C_DFL) " "clang"
 		@printf "compiling ./srcs/utils/logger_init_open_file.c\n"
 		@$(CC) -c ./srcs/utils/logger_init_open_file.c -o ./.objs/logger_init_open_file.o $(CPPFLAGS) $(CFLAGS) 
