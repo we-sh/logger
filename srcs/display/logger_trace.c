@@ -18,7 +18,7 @@ void	logger_trace(int fd, char *file, int line, const char *fmt, ...)
 	vasprintf(&out_mesg, fmt, lst);
 	va_end(lst);
 
-	dprintf(fd, "\033[0m%s%s\033[0m\n", out_info, out_mesg);
+	dprintf(fd, "\033[38;5;239m%s%s\033[0m\n", out_info, out_mesg);
 
 	free(out_info);
 	free(out_mesg);
