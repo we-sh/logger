@@ -12,8 +12,7 @@ void	logger_debug(int fd, char *file, int line, const char *fmt, ...)
 
 	time = logger_get_time();
 	asprintf(&out_info, "[ %s ] [ %-7s ] (l.%3d) %s -> ", \
-			time, "DEBUG", line, file);
-
+			time, " DEBUG", line, file);
 	va_start(lst, fmt);
 	vasprintf(&out_mesg, fmt, lst);
 	va_end(lst);

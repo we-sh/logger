@@ -12,7 +12,7 @@ void	logger_warn(int fd, char *file, int line, const char *fmt, ...)
 
 	time = logger_get_time();
 	asprintf(&out_info, "[ %s ] [ %-7s ] (l.%3d) %s -> ", \
-			time, "WARN", line, file);
+			time, "WARNING", line, file);
 
 	va_start(lst, fmt);
 	vasprintf(&out_mesg, fmt, lst);
