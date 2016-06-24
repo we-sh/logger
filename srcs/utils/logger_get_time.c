@@ -6,10 +6,10 @@ char	*logger_get_time(void)
 	char		*buf;
 	struct tm	*tm_info;
 
-	if (!(buf = (char *)malloc(sizeof(char) * 26)))
+	if (!(buf = (char *)malloc(sizeof(char) * 9)))
 		return (NULL);
 	tm = time(NULL);
 	tm_info = localtime(&tm);
-	strftime(buf, 26, "%Y/%m/%d %H:%M:%S", tm_info);
+	strftime(buf, 9, "%H:%M:%S", tm_info);
 	return (buf);
 }
