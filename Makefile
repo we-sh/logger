@@ -50,18 +50,18 @@
 NAME	=	liblogger.a
 
 
-SRCS		=	\
-				logger/logger_init.c			\
-				logger/logger_close.c			\
-				display/logger_fatal.c			\
-				display/logger_error.c			\
-				display/logger_warn.c			\
-				display/logger_success.c		\
-				display/logger_info.c			\
-				display/logger_debug.c			\
-				display/logger_trace.c			\
-				utils/logger_get_time.c			\
-				utils/logger_init_open_file.c	\
+SRCS	=	\
+			logger/logger_init.c			\
+			logger/logger_close.c			\
+			display/logger_fatal.c			\
+			display/logger_error.c			\
+			display/logger_warn.c			\
+			display/logger_success.c		\
+			display/logger_info.c			\
+			display/logger_debug.c			\
+			display/logger_trace.c			\
+			utils/logger_get_time.c			\
+			utils/logger_init_open_file.c	\
 
 # ---------------------------------------------------------------------------- #
 # PROJECT CONFIGURATION                                                        #
@@ -139,6 +139,7 @@ $(DIRDEP)	:
 # - libs       build static libraries                                          #
 # - clean      remove binaries                                                 #
 # - fclean     remove binaries and target                                      #
+# - fcleanlibs apply fclean rule on libraries                                  #
 # - re         remove binaries, target and libraries and build the target      #
 #                                                                              #
 # To compile a static library, the $(NAME) rule should be :                    #
@@ -150,9 +151,10 @@ $(DIRDEP)	:
 # ---------------------------------------------------------------------------- #
 
 all			:	libs $(NAME)
+	@printf "\033[32m[ %s ]\033[0m %s\n" "$(NAME)" "finish to build $(NAME)"
 
 $(NAME)		:	$(DIROBJ) $(DIRDEP) $(OBJ)
-	@printf "linking objects...\n"
+	@printf "\033[32m[ %s ]\033[0m %s\n" "$(NAME)" "link objects..."
 	@$(AR) $(ARFLAGS) $(NAME) $(OBJ)
 	@ranlib $(NAME)
 
@@ -161,13 +163,16 @@ libs		:
 fcleanlibs	:
 
 clean		:
-	$(RM) -r $(DIROBJ)
-	$(RM) -r $(DIRDEP)
-	$(RM) main.o
+	@printf "\033[32m[ %s ]\033[0m %s\n" "$(NAME)" "remove objects..."
+	@$(RM) -r $(DIROBJ)
+	@printf "\033[32m[ %s ]\033[0m %s\n" "$(NAME)" "remove dependencies..."
+	@$(RM) -r $(DIRDEP)
+	@$(RM) main.o
 
 fclean		:	clean
-	$(RM) $(NAME)
-	$(RM) a.out
+	@printf "\033[32m[ %s ]\033[0m %s\n" "$(NAME)" "remove target..."
+	@$(RM) $(NAME)
+	@$(RM) a.out
 
 re			:	fcleanlibs fclean all
 
@@ -177,6 +182,18 @@ test		:	all
 	@$(CC) main.o $(NAME) -o a.out
 
 # ---------------------------------------------------------------------------- #
+# CUSTOM RULES                                                                 #
+# ---------------------------------------------------------------------------- #
+
+norme		:
+	@printf "\033[32m[ %s ]\033[0m %s\n" "$(NAME)" "run norminette..."
+	@printf "\033[33m[ %s ]\033[0m %s\n" "$(NAME)" "missing headers not check"
+	@/usr/bin/norminette -R CheckTopCommentHeader	\
+		$$(find * -name "*.[ch]" ! -path "test/*")
+	@printf "\033[32m[ %s ]\033[0m %s\n" "$(NAME)" "run norminette..."
+	@printf "\033[33m[ %s ]\033[0m %s\n" "$(NAME)" "missing headers not check"
+
+# ---------------------------------------------------------------------------- #
 # /!\ PRIVATE RULES /!\                                                        #
 # ---------------------------------------------------------------------------- #
 
@@ -184,7 +201,7 @@ $(DIROBJ)/%.o	:	$($(DIRSRC)/%.c
 $(DIROBJ)/%.o	:	$(DIRSRC)/%.c $(DIRDEP)/%.d
 	@mkdir -p $(dir $@)
 	@mkdir -p $(dir $(word 2,$^))
-	@printf "compiling $<...\n"
+	@printf "\033[32m[ %s ]\033[0m %s\n" "$(NAME)" "compiling $<..."
 	@$(COMPILE.c) $(OUTPUT_OPTION) $<
 	@$(POSTCOMPILE)
 
