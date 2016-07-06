@@ -49,6 +49,7 @@
 
 NAME	=	liblogger.a
 
+# ---------------------------------------------------------------------------- #
 
 SRCS	=	\
 			logger/logger_init.c			\
@@ -176,14 +177,17 @@ fclean		:	clean
 
 re			:	fcleanlibs fclean all
 
-test		:	all
-	@printf "compiling test\n"
-	@$(CC) $(CFLAGS) -c $(DIRTST)/main.c -o main.o -I $(DIRINC)
-	@$(CC) main.o $(NAME) -o a.out
-
 # ---------------------------------------------------------------------------- #
 # CUSTOM RULES                                                                 #
 # ---------------------------------------------------------------------------- #
+
+test		:	re
+	@printf "\033[32m[ %s ]\033[0m %s\n" "$(NAME)" "run tests..."
+	@$(CC) $(CFLAGS) -c $(DIRTST)/main.c -o main.o -I $(DIRINC)
+	@$(CC) main.o $(NAME) -o a.out
+
+submodule	:
+	@printf "\033[32m[ %s ]\033[0m %s\n" "$(NAME)" "retrieve submodules..."
 
 norme		:
 	@printf "\033[32m[ %s ]\033[0m %s\n" "$(NAME)" "run norminette..."
