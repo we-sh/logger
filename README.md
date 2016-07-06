@@ -95,13 +95,13 @@ Each functions will provide a different output, here is a sample of the executio
 ```C
 >>>>>>>>>>>>>>>>>> NEW INSTANCE OF THE APPLICATION <<<<<<<<<<<<<<<<<<
 
-[ 2016/05/01 13:49:20 ] [ FATAL   ] (l. 19) main.c -> fatal message
-[ 2016/05/01 13:49:20 ] [ ERROR   ] (l. 20) main.c -> error message
-[ 2016/05/01 13:49:20 ] [ WARN    ] (l. 21) main.c -> warning message
-[ 2016/05/01 13:49:20 ] [ SUCCESS ] (l. 22) main.c -> success message
-[ 2016/05/01 13:49:20 ] [ INFO    ] (l. 23) main.c -> info message
-[ 2016/05/01 13:49:20 ] [ DEBUG   ] (l. 24) main.c -> debug message
-[ 2016/05/01 13:49:20 ] [ TRACE   ] (l. 25) main.c -> trace message
+[ 12:50:30 ] (l. 26) main.c               -> fatal message
+[ 12:50:30 ] (l. 27) main.c               -> error message
+[ 12:50:30 ] (l. 28) main.c               -> warning message
+[ 12:50:30 ] (l. 29) main.c               -> success message
+[ 12:50:30 ] (l. 30) main.c               -> info message
+[ 12:50:30 ] (l. 31) main.c               -> debug message
+[ 12:50:30 ] (l. 32) main.c               -> trace message
 
 >>>>>>>>>>>>>>>>>> END OF THE APPLICATION INSTANCE <<<<<<<<<<<<<<<<<<
 ```
