@@ -1,6 +1,6 @@
 #include "logger.h"
 
-void	logger_debug(int fd, char *file, int line, const char *fmt, ...)
+void	log_debug(int fd, char *file, int line, const char *fmt, ...)
 {
 	va_list	lst;
 	char	*time;
@@ -8,7 +8,7 @@ void	logger_debug(int fd, char *file, int line, const char *fmt, ...)
 	char	*out_mesg;
 	char 	*f;
 
-	if (g_log_lvl < D_DEBUG)
+	if (g_lvl < D_DEBUG)
 		return ;
 
 	f = NULL;

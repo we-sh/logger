@@ -1,14 +1,14 @@
 #include "logger.h"
 
-void	logger_trace(int fd, char *file, int line, const char *fmt, ...)
+void	log_info(int fd, char *file, int line, const char *fmt, ...)
 {
 	va_list	lst;
 	char	*time;
 	char	*out_info;
 	char	*out_mesg;
-	char	*f;
+	char 	*f;
 
-	if (g_log_lvl < D_TRACE)
+	if (g_lvl < D_INFO)
 		return ;
 
 	f = NULL;
@@ -25,11 +25,12 @@ void	logger_trace(int fd, char *file, int line, const char *fmt, ...)
 			time, line, f);
 	free(f);
 
+
 	va_start(lst, fmt);
 	vasprintf(&out_mesg, fmt, lst);
 	va_end(lst);
 
-	dprintf(fd, "\033[38;5;239m%s%s\033[0m\n", out_info, out_mesg);
+	dprintf(fd, "\033[36m%s%s\033[0m\n", out_info, out_mesg);
 
 	free(out_info);
 	free(out_mesg);

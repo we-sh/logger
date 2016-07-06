@@ -14,15 +14,14 @@
 ** Macro to get the basename of the __FILE__ macro.
 */
 
-# define __FILENAME__	\
-	(strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)
+# define __NAME__ (strrchr(__FILE__,'/') ? strrchr(__FILE__,'/')+1 : __FILE__)
 
 /*
 ** Global variables, the file descriptor to write on, and the log level.
 */
 
-int			g_log_fd;
-int			g_log_lvl;
+int		g_lfd;
+int		g_lvl;
 
 /*
 ** Tools functions.
@@ -30,13 +29,13 @@ int			g_log_lvl;
 
 int		logger_init_open_file(char *log_file);
 
-void	logger_fatal(int fd, char *file, int line, const char *fmt, ...);
-void	logger_error(int fd, char *file, int line, const char *fmt, ...);
-void	logger_warn(int fd, char *file, int line, const char *fmt, ...);
-void	logger_success(int fd, char *file, int line, const char *fmt, ...);
-void	logger_info(int fd, char *file, int line, const char *fmt, ...);
-void	logger_debug(int fd, char *file, int line, const char *fmt, ...);
-void	logger_trace(int fd, char *file, int line, const char *fmt, ...);
+void	log_fatal(int fd, char *file, int line, const char *fmt, ...);
+void	log_error(int fd, char *file, int line, const char *fmt, ...);
+void	log_warn(int fd, char *file, int line, const char *fmt, ...);
+void	log_success(int fd, char *file, int line, const char *fmt, ...);
+void	log_info(int fd, char *file, int line, const char *fmt, ...);
+void	log_debug(int fd, char *file, int line, const char *fmt, ...);
+void	log_trace(int fd, char *file, int line, const char *fmt, ...);
 
 char	*logger_get_time(void);
 

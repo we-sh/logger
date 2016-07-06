@@ -1,6 +1,6 @@
 #include "logger.h"
 
-void	logger_fatal(int fd, char *file, int line, const char *fmt, ...)
+void	log_warn(int fd, char *file, int line, const char *fmt, ...)
 {
 	va_list	lst;
 	char	*time;
@@ -8,7 +8,7 @@ void	logger_fatal(int fd, char *file, int line, const char *fmt, ...)
 	char	*out_mesg;
 	char 	*f;
 
-	if (g_log_lvl < D_FATAL)
+	if (g_lvl < D_WARN)
 		return ;
 
 	f = NULL;
@@ -29,7 +29,7 @@ void	logger_fatal(int fd, char *file, int line, const char *fmt, ...)
 	vasprintf(&out_mesg, fmt, lst);
 	va_end(lst);
 
-	dprintf(fd, "\033[31m%s%s\033[0m\n", out_info, out_mesg);
+	dprintf(fd, "\033[31m\033[1;33m%s%s\033[0m\n", out_info, out_mesg);
 
 	free(out_info);
 	free(out_mesg);

@@ -1,6 +1,6 @@
 #include "logger.h"
 
-void	logger_info(int fd, char *file, int line, const char *fmt, ...)
+void	log_success(int fd, char *file, int line, const char *fmt, ...)
 {
 	va_list	lst;
 	char	*time;
@@ -8,7 +8,7 @@ void	logger_info(int fd, char *file, int line, const char *fmt, ...)
 	char	*out_mesg;
 	char 	*f;
 
-	if (g_log_lvl < D_INFO)
+	if (g_lvl < D_WARN)
 		return ;
 
 	f = NULL;
@@ -25,12 +25,11 @@ void	logger_info(int fd, char *file, int line, const char *fmt, ...)
 			time, line, f);
 	free(f);
 
-
 	va_start(lst, fmt);
 	vasprintf(&out_mesg, fmt, lst);
 	va_end(lst);
 
-	dprintf(fd, "\033[36m%s%s\033[0m\n", out_info, out_mesg);
+	dprintf(fd, "\033[32m%s%s\033[0m\n", out_info, out_mesg);
 
 	free(out_info);
 	free(out_mesg);

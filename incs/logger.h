@@ -21,26 +21,19 @@
 ** Functions to use for display log messages.
 */
 
-#define log_fatal(...)		\
-	logger_fatal(g_log_fd, __FILENAME__, __LINE__, __VA_ARGS__)
+# define LOG_FATAL(...)		log_fatal(g_lfd, __NAME__, __LINE__, __VA_ARGS__)
 
-#define log_error(...)		\
-	logger_error(g_log_fd, __FILENAME__, __LINE__, __VA_ARGS__)
+# define LOG_ERROR(...)		log_error(g_lfd, __NAME__, __LINE__, __VA_ARGS__)
 
-#define log_warn(...)		\
-	logger_warn(g_log_fd, __FILENAME__, __LINE__, __VA_ARGS__)
+# define LOG_WARN(...)		log_warn(g_lfd, __NAME__, __LINE__, __VA_ARGS__)
 
-#define log_success(...)	\
-	logger_success(g_log_fd, __FILENAME__, __LINE__, __VA_ARGS__)
+# define LOG_SUCCESS(...)	log_success(g_lfd, __NAME__, __LINE__, __VA_ARGS__)
 
-#define log_info(...)		\
-	logger_info(g_log_fd, __FILENAME__, __LINE__, __VA_ARGS__)
+# define LOG_INFO(...)		log_info(g_lfd, __NAME__, __LINE__, __VA_ARGS__)
 
-#define log_debug(...)		\
-	logger_debug(g_log_fd, __FILENAME__, __LINE__, __VA_ARGS__)
+# define LOG_DEBUG(...)		log_debug(g_lfd, __NAME__, __LINE__, __VA_ARGS__)
 
-#define log_trace(...)		\
-	logger_trace(g_log_fd, __FILENAME__, __LINE__, __VA_ARGS__)
+# define LOG_TRACE(...)		log_trace(g_lfd, __NAME__, __LINE__, __VA_ARGS__)
 
 /*
 ** Setup the logger and write a sample message 'INFO' if success on the given

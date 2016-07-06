@@ -53,13 +53,13 @@ NAME	=	liblogger.a
 SRCS		=	\
 				logger/logger_init.c			\
 				logger/logger_close.c			\
-				display/logger_fatal.c			\
-				display/logger_error.c			\
-				display/logger_warn.c			\
-				display/logger_success.c		\
-				display/logger_info.c			\
-				display/logger_debug.c			\
-				display/logger_trace.c			\
+				display/log_fatal.c				\
+				display/log_error.c				\
+				display/log_warn.c				\
+				display/log_success.c			\
+				display/log_info.c				\
+				display/log_debug.c				\
+				display/log_trace.c				\
 				utils/logger_get_time.c			\
 				utils/logger_init_open_file.c	\
 
