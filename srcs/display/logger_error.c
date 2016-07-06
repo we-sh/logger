@@ -6,13 +6,24 @@ void	logger_error(int fd, char *file, int line, const char *fmt, ...)
 	char	*time;
 	char	*out_info;
 	char	*out_mesg;
+	char 	*f;
 
 	if (g_log_lvl < D_ERROR)
 		return ;
 
+	f = NULL;
+	if (strlen(file) >= 20)
+	{
+		f = strdup(file + (strlen(file) - 20));
+		f[0] = '+';
+	
+	}
+	else
+		f = strdup(file);
 	time = logger_get_time();
-	asprintf(&out_info, "[ %s ] [ %-7s ] (l.%3d) %s -> ", \
-			time, "ERROR", line, file);
+	asprintf(&out_info, "[ %s ] (l.%3d) %-20.20s -> ", \
+			time, line, f);
+	free(f);
 
 	va_start(lst, fmt);
 	vasprintf(&out_mesg, fmt, lst);
