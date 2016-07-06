@@ -1,10 +1,20 @@
 # project specific
+
+# logs
 *.log
 
 # C program
 *.out
 *.a
 *.o
+*.d
 
 # editors
 .*.swp
+.idea/
+
+# trash files
+._.DS_Store
+.DS_Store
+.nfs.*
+._*

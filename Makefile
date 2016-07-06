@@ -1,219 +1,200 @@
-#
-# This file is under Apache 2.0 license, see LICENSE.md.
-# 
+# ---------------------------------------------------------------------------- #
+# The purpose of the Makefile is to provide a tool which optimizes the build   #
+# of a project, The common problems are bad management of dependencies, relink #
+# build, uncompiled modified sources...                                        #
+#                                                                              #
+# ---------------------------------------------------------------------------- #
+#                                                                              #
+# USAGE                                                                        #
+#                                                                              #
+# ---------------------------------------------------------------------------- #
+# First, the user must configure its environment settings.                     #
+# - see 'PROJECT CONFIGURATION' to configure project directories               #
+# - see 'EXTERNAL TOOLS SETTINGS' to setup default programs to use             #
+#                                                                              #
+# Second, configure the sources.                                               #
+# - see 'TARGET SETUP' to set the name of the target and the sources           #
+#                                                                              #
+# Third, configure the build options.                                          #
+# - see 'PROJECT COMPILATION' to setup prepocessor, flags and libraries        #
+#                                                                              #
+# Fourth, setup the linking rule.                                              #
+# - see 'PUBLIC RULES' to modify the $(NAME) rule                              #
+#                                                                              #
+# ---------------------------------------------------------------------------- #
+# The project must compile at this step.                                       #
+# ---------------------------------------------------------------------------- #
+#                                                                              #
+# To add custom rules, the concerned section is 'PUBLIC RULES'. Be sure to     #
+# keep at least the rules all, $(NAME), libs, clean, fclean and re.            #
+#                                                                              #
+# ---------------------------------------------------------------------------- #
+#                                                                              #
+#                               /!\ WARNING /!\                                #
+#                                                                              #
+# The sections commented with '/!\' are critical, and must not be modified.    # 
+#                                                                              #
+# ---------------------------------------------------------------------------- #
+
 
 # ---------------------------------------------------------------------------- #
-# PROJECT DATA
+#                                                                              #
+# TARGET SETUP                                                                 #
+#                                                                              #
+# ---------------------------------------------------------------------------- #
+# - The 'NAME' variable must contain the expected name of the output target.   #
+# - The 'SRCS' variable must contain the list of the source files without the  #
+# base prefix of the directory.                                                #
 # ---------------------------------------------------------------------------- #
 
-NAME		=	liblogger.a
+NAME	=	liblogger.a
 
-# ---------------------------------------------------------------------------- #
 
 SRCS		=	\
-				logger/logger_init.c					\
-				logger/logger_close.c					\
-				display/logger_fatal.c					\
-				display/logger_error.c					\
-				display/logger_warn.c					\
-				display/logger_success.c				\
-				display/logger_info.c					\
-				display/logger_debug.c					\
-				display/logger_trace.c					\
-				utils/logger_get_time.c					\
-				utils/logger_init_open_file.c			\
+				logger/logger_init.c			\
+				logger/logger_close.c			\
+				display/logger_fatal.c			\
+				display/logger_error.c			\
+				display/logger_warn.c			\
+				display/logger_success.c		\
+				display/logger_info.c			\
+				display/logger_debug.c			\
+				display/logger_trace.c			\
+				utils/logger_get_time.c			\
+				utils/logger_init_open_file.c	\
 
 # ---------------------------------------------------------------------------- #
-# PROJECT CONFIGURATION
+# PROJECT CONFIGURATION                                                        #
+# ---------------------------------------------------------------------------- #
+# - The 'DIR*' variables describe all directories of the project.              #
 # ---------------------------------------------------------------------------- #
 
-CFLAGS		=	\
-				-Wall -Wextra -Werror					\
+DIRSRC	=	srcs
+DIRINC	=	incs
+DIRLIB	=	libs
+DIRTST	=	test
+DIROBJ	=	.objs
+DIRDEP	=	.deps
 
-# >>> REQUIRED FOR LIBRARIES >>> THINK ABOUT CHANGING THE *LIBS rules
+# ---------------------------------------------------------------------------- #
+# EXTERNAL TOOLS SETTINGS                                                      #
+# ---------------------------------------------------------------------------- #
+# - Set the default external programs.                                         #
+# ---------------------------------------------------------------------------- #
 
-CPPFLAGS	=	\
-				-I $(DIRINC)							\
+CC		=	clang
+AR		=	ar
+ARFLAGS	=	rc
+RM		=	rm -f
+
+# ---------------------------------------------------------------------------- #
+# PROJECT COMPILATION                                                          #
+# ---------------------------------------------------------------------------- #
+# - The 'LDFLAGS' tells the linker where to find external libraries (-L flag). #
+# - The 'LDLIBS' tells the linker the prefix of external libraries (-l flag).  #
+# - The 'CPPFLAGS' tells the compiler where to find preprocessors (-I flag).   #
+# - The 'CFLAGS' configures the compiler options.                              #
+# ---------------------------------------------------------------------------- #
 
 LDFLAGS		=	\
 
 LDLIBS		=	\
 
-# GLOBAL SETUP
-AR			=	ar
-CC			=	clang
-RM			=	rm
-MKDIR		=	mkdir
-MAKE		=	make
+CPPFLAGS	=	\
+				-I $(DIRINC)					\
 
-DIRSRC		=	./srcs/
-DIROBJ		=	./.objs/
-DIRINC		=	./incs/
-DIRLIB		=	./libs/
-DIRTST		=	./test/
-
-# EXTRA COLOR
-C_DFL		=	\033[0m
-C_GRA		=	\033[30m
-C_RED		=	\033[31m
-C_GRE		=	\033[32m
-C_YEL		=	\033[33m
-C_BLUE		=	\033[34m
-C_MAG		=	\033[35m
-C_CYA		=	\033[36m
-C_WHI		=	\033[37m
-
-# ============================================================================ #
+CFLAGS		=	\
+				-Wall -Wextra -Werror			\
 
 # ---------------------------------------------------------------------------- #
-# SOURCES NORMALIZATION
+# /!\ COMPILATION RULES /!\                                                    #
 # ---------------------------------------------------------------------------- #
 
-SRC			=	$(addprefix $(DIRSRC), $(SRCS))
-OBJ			=	$(addprefix $(DIROBJ), $(notdir $(SRC:.c=.o)))
+DEPFLAGS	=	\
+				-MT $@ -MMD -MP -MF $(DIRDEP)/$*.Td	\
+
+COMPILE.c	=	$(CC) $(DEPFLAGS) $(CFLAGS) $(CPPFLAGS) -c
+
+POSTCOMPILE	=	mv -f $(DIRDEP)/$*.Td $(DIRDEP)/$*.d
 
 # ---------------------------------------------------------------------------- #
-# RULES
+# /!\ SOURCES NORMALIZATION /!\                                                #
+# ---------------------------------------------------------------------------- #
+
+SRC	=	$(addprefix $(DIRSRC)/, $(SRCS))
+OBJ	=	$(addprefix $(DIROBJ)/, $(SRCS:.c=.o))
+
+$(DIROBJ)	:
+	@mkdir -p $(DIROBJ)
+
+$(DIRDEP)	:
+	@mkdir -p $(DIRDEP)
+
+# ---------------------------------------------------------------------------- #
+# PUBLIC RULES                                                                 #
+# ---------------------------------------------------------------------------- #
+# The rules must contain at least :                                            #
+# - all        make libs and target                                            #
+# - $(NAME)    make binaries and target                                        #
+# - libs       build static libraries                                          #
+# - clean      remove binaries                                                 #
+# - fclean     remove binaries and target                                      #
+# - re         remove binaries, target and libraries and build the target      #
+#                                                                              #
+# To compile a static library, the $(NAME) rule should be :                    #
+#     '$(AR) $(ARFLAGS) $(NAME) $(OBJ)'                                        #
+#     'ranlib $(NAME)'                                                         #
+#                                                                              #
+# To compile a C binary, the $(NAME) rule should be :                          #
+#     '$(CC) $(OBJ) -o $(NAME) $(LDFLAGS) $(LDLIBS)'                           #
 # ---------------------------------------------------------------------------- #
 
 all			:	libs $(NAME)
-	@printf "$(C_GRE)[ $(NAME) ] [ %-6s ]$(C_DFL) build completed\n" "$(MAKE)"
 
-$(NAME)		:	$(DIROBJ) $(OBJ)
-	@printf "$(C_GRE)[ $(NAME) ] [ %-6s ]$(C_DFL) linking objects\n" "$(CC)"
-	@$(AR) rc $(NAME) $(OBJ)
-	@printf "$(C_GRE)[ $(NAME) ] [ %-6s ]$(C_DFL) index project\n" "ranlib"
+$(NAME)		:	$(DIROBJ) $(DIRDEP) $(OBJ)
+	@printf "linking objects...\n"
+	@$(AR) $(ARFLAGS) $(NAME) $(OBJ)
 	@ranlib $(NAME)
-
-# ---------------------------------------------------------------------------- #
-# CUSTOMISABLE RULES
 
 libs		:
 
 fcleanlibs	:
 
+clean		:
+	$(RM) -r $(DIROBJ)
+	$(RM) -r $(DIRDEP)
+	$(RM) main.o
+
+fclean		:	clean
+	$(RM) $(NAME)
+	$(RM) a.out
+
+re			:	fcleanlibs fclean all
+
 test		:	all
-	@printf "$(C_GRE)[ $(NAME) ] [ %-6s ]$(C_DFL) compiling test\n" "$(CC)"
-	@$(CC) $(CFLAGS) -c $(DIRTST)main.c -o main.o -I $(DIRINC)
+	@printf "compiling test\n"
+	@$(CC) $(CFLAGS) -c $(DIRTST)/main.c -o main.o -I $(DIRINC)
 	@$(CC) main.o $(NAME) -o a.out
 
 # ---------------------------------------------------------------------------- #
-
-clean		:
-	@printf "$(C_GRE)[ $(NAME) ] [ %-6s ]$(C_DFL) remove objects\n" "$(RM)"
-	@$(RM) -rf $(DIROBJ)
-
-fclean		:	fcleanlibs clean
-	@printf "$(C_GRE)[ $(NAME) ] [ %-6s ]$(C_DFL) remove binaries\n" "$(RM)"
-	@$(RM) -f $(NAME)
-	@printf "$(C_GRE)[ $(NAME) ] [ %-6s ]$(C_DFL) remove test binary\n" "$(RM)"
-	@$(RM) -f a.out main.o
-	@printf "$(C_GRE)[ $(NAME) ] [ %-6s ]$(C_DFL) remove log files\n" "$(RM)"
-	@$(RM) -f *.log
-
-re			:	fclean all
-
-$(DIROBJ)	:
-	@$(MKDIR) -p $(DIROBJ)
-
-depend		:
-	@sed -e '/^#start/,/^end/d' Makefile > .mftmp && mv .mftmp Makefile
-	@printf "#start\n\n" >> Makefile
-	@$(foreach s, $(SRC),													\
-		printf '$$(DIROBJ)'										>> Makefile	&& \
-		$(CC) -MM $(s) $(CPPFLAGS)								>> Makefile	&& \
-																			\
-		printf '\t\t@printf "$$(C_GRE)[ $(NAME) ] '				>> Makefile && \
-		printf '[ %%-6s ]$$(C_DFL) " "$(CC)"\n'					>> Makefile && \
-		printf '\t\t@printf "compiling $(s)\\n"\n'				>> Makefile	&& \
-																			\
-		printf '\t\t@$$(CC) -c $(s) -o '						>> Makefile	&& \
-		printf '$(addprefix $(DIROBJ), $(notdir $(s:.c=.o))) '	>> Makefile	&& \
-		printf '$$(CPPFLAGS) $$(CFLAGS) \n\n'					>> Makefile	&& \
-																			\
-		printf "$(C_GRE)[ $(NAME) ] [ %-6s ]$(C_DFL) " "dep"				&& \
-		printf "$(s) rule generated\n"										|| \
-																			\
-		(sed -e '/^#start/,$$d' Makefile > .mftmp && mv .mftmp Makefile		&& \
-		printf "#start\n\n"										>> Makefile	&& \
-		printf "$(C_RED)[ $(NAME) ] [ %-6s ]$(C_DFL) " "dep"				&& \
-		printf "$(s) rule generation failed\n"								) \
-	;)
-	@printf "\n#end\n" >> Makefile
-
-.PHONY	:	 libs test
-
-# ---------------------------------------------------------------------------- #
-# AUTO-GENERATED SECTION - do not modify
+# /!\ PRIVATE RULES /!\                                                        #
 # ---------------------------------------------------------------------------- #
 
-#start
+$(DIROBJ)/%.o	:	$($(DIRSRC)/%.c
+$(DIROBJ)/%.o	:	$(DIRSRC)/%.c $(DIRDEP)/%.d
+	@mkdir -p $(dir $@)
+	@mkdir -p $(dir $(word 2,$^))
+	@printf "compiling $<...\n"
+	@$(COMPILE.c) $(OUTPUT_OPTION) $<
+	@$(POSTCOMPILE)
 
-$(DIROBJ)logger_init.o: srcs/logger/logger_init.c incs/logger.h \
-  incs/logger_utils.h
-		@printf "$(C_GRE)[ liblogger.a ] [ %-6s ]$(C_DFL) " "clang"
-		@printf "compiling ./srcs/logger/logger_init.c\n"
-		@$(CC) -c ./srcs/logger/logger_init.c -o ./.objs/logger_init.o $(CPPFLAGS) $(CFLAGS) 
+$(DIRDEP)/%.d	:	;
+.PRECIOUS		:	$(DIRDEP)/%.d
 
-$(DIROBJ)logger_close.o: srcs/logger/logger_close.c incs/logger.h \
-  incs/logger_utils.h
-		@printf "$(C_GRE)[ liblogger.a ] [ %-6s ]$(C_DFL) " "clang"
-		@printf "compiling ./srcs/logger/logger_close.c\n"
-		@$(CC) -c ./srcs/logger/logger_close.c -o ./.objs/logger_close.o $(CPPFLAGS) $(CFLAGS) 
+-include $(patsubst %,$(DIRDEP)/%.d,$(basename $(SRC)))
 
-$(DIROBJ)logger_fatal.o: srcs/display/logger_fatal.c incs/logger.h \
-  incs/logger_utils.h
-		@printf "$(C_GRE)[ liblogger.a ] [ %-6s ]$(C_DFL) " "clang"
-		@printf "compiling ./srcs/display/logger_fatal.c\n"
-		@$(CC) -c ./srcs/display/logger_fatal.c -o ./.objs/logger_fatal.o $(CPPFLAGS) $(CFLAGS) 
+# ---------------------------------------------------------------------------- #
 
-$(DIROBJ)logger_error.o: srcs/display/logger_error.c incs/logger.h \
-  incs/logger_utils.h
-		@printf "$(C_GRE)[ liblogger.a ] [ %-6s ]$(C_DFL) " "clang"
-		@printf "compiling ./srcs/display/logger_error.c\n"
-		@$(CC) -c ./srcs/display/logger_error.c -o ./.objs/logger_error.o $(CPPFLAGS) $(CFLAGS) 
+.PHONY	:	all clean fclean re $(DIROBJ)/%.o $(DIRDEP)/%.d libs
 
-$(DIROBJ)logger_warn.o: srcs/display/logger_warn.c incs/logger.h \
-  incs/logger_utils.h
-		@printf "$(C_GRE)[ liblogger.a ] [ %-6s ]$(C_DFL) " "clang"
-		@printf "compiling ./srcs/display/logger_warn.c\n"
-		@$(CC) -c ./srcs/display/logger_warn.c -o ./.objs/logger_warn.o $(CPPFLAGS) $(CFLAGS) 
-
-$(DIROBJ)logger_success.o: srcs/display/logger_success.c incs/logger.h \
-  incs/logger_utils.h
-		@printf "$(C_GRE)[ liblogger.a ] [ %-6s ]$(C_DFL) " "clang"
-		@printf "compiling ./srcs/display/logger_success.c\n"
-		@$(CC) -c ./srcs/display/logger_success.c -o ./.objs/logger_success.o $(CPPFLAGS) $(CFLAGS) 
-
-$(DIROBJ)logger_info.o: srcs/display/logger_info.c incs/logger.h \
-  incs/logger_utils.h
-		@printf "$(C_GRE)[ liblogger.a ] [ %-6s ]$(C_DFL) " "clang"
-		@printf "compiling ./srcs/display/logger_info.c\n"
-		@$(CC) -c ./srcs/display/logger_info.c -o ./.objs/logger_info.o $(CPPFLAGS) $(CFLAGS) 
-
-$(DIROBJ)logger_debug.o: srcs/display/logger_debug.c incs/logger.h \
-  incs/logger_utils.h
-		@printf "$(C_GRE)[ liblogger.a ] [ %-6s ]$(C_DFL) " "clang"
-		@printf "compiling ./srcs/display/logger_debug.c\n"
-		@$(CC) -c ./srcs/display/logger_debug.c -o ./.objs/logger_debug.o $(CPPFLAGS) $(CFLAGS) 
-
-$(DIROBJ)logger_trace.o: srcs/display/logger_trace.c incs/logger.h \
-  incs/logger_utils.h
-		@printf "$(C_GRE)[ liblogger.a ] [ %-6s ]$(C_DFL) " "clang"
-		@printf "compiling ./srcs/display/logger_trace.c\n"
-		@$(CC) -c ./srcs/display/logger_trace.c -o ./.objs/logger_trace.o $(CPPFLAGS) $(CFLAGS) 
-
-$(DIROBJ)logger_get_time.o: srcs/utils/logger_get_time.c incs/logger.h \
-  incs/logger_utils.h
-		@printf "$(C_GRE)[ liblogger.a ] [ %-6s ]$(C_DFL) " "clang"
-		@printf "compiling ./srcs/utils/logger_get_time.c\n"
-		@$(CC) -c ./srcs/utils/logger_get_time.c -o ./.objs/logger_get_time.o $(CPPFLAGS) $(CFLAGS) 
-
-$(DIROBJ)logger_init_open_file.o: srcs/utils/logger_init_open_file.c incs/logger.h \
-  incs/logger_utils.h
-		@printf "$(C_GRE)[ liblogger.a ] [ %-6s ]$(C_DFL) " "clang"
-		@printf "compiling ./srcs/utils/logger_init_open_file.c\n"
-		@$(CC) -c ./srcs/utils/logger_init_open_file.c -o ./.objs/logger_init_open_file.o $(CPPFLAGS) $(CFLAGS) 
-
-
-#end
+# ---------------------------------------------------------------------------- #
