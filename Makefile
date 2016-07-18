@@ -97,9 +97,11 @@ RM		=	rm -f
 # - The 'CFLAGS' configures the compiler options.                              #
 # ---------------------------------------------------------------------------- #
 
-LDFLAGS		=	\
+LIBS		=	\
 
 LDLIBS		=	\
+
+LDFLAGS		=	\
 
 CPPFLAGS	=	\
 				-I $(DIRINC)					\
@@ -154,7 +156,7 @@ $(DIRDEP)	:
 all			:	libs $(NAME)
 	@printf "\033[32m[ %s ]\033[0m %s\n" "$(NAME)" "finish to build $(NAME)"
 
-$(NAME)		:	$(DIROBJ) $(DIRDEP) $(OBJ)
+$(NAME)		:	$(DIROBJ) $(DIRDEP) $(OBJ) $(LIBS)
 	@printf "\033[32m[ %s ]\033[0m %s\n" "$(NAME)" "link objects..."
 	@$(AR) $(ARFLAGS) $(NAME) $(OBJ)
 	@ranlib $(NAME)
@@ -212,7 +214,7 @@ $(DIROBJ)/%.o	:	$(DIRSRC)/%.c $(DIRDEP)/%.d
 $(DIRDEP)/%.d	:	;
 .PRECIOUS		:	$(DIRDEP)/%.d
 
--include $(patsubst %,$(DIRDEP)/%.d,$(basename $(SRC)))
+-include $(patsubst %,$(DIRDEP)/%.d,$(basename $(SRCS)))
 
 # ---------------------------------------------------------------------------- #
 
